@@ -1,7 +1,7 @@
 <template>
 	<div class="game-board">
 		<SingleCard
-			v-for="card in cards"
+			v-for="card in shuffledCards"
 			:id="card.id"
 			:cardImage="card.image"
 			:cardAltTxt="card.text"
@@ -12,6 +12,13 @@
 
 <script setup>
 import SingleCard from './SingleCard.vue';
+import { ref } from 'vue';
+import { useGameStore } from '@/store/gameStore';
+
+const gameStore = useGameStore();
+const flippedCards = ref([]);
+const matchedCards = ref([]);
+
 const cards = [
 	{ id: 1, image: 'image1.jpg', text: 'Image 1' },
 	{ id: 2, image: 'image2.jpg', text: 'Image 2' },

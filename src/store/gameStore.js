@@ -2,8 +2,9 @@ import { defineStore } from 'pinia';
 
 export const useGameStore = defineStore('game', {
 	state: () => ({
-		difficulty: 4,
+		difficulty: 'easy',
 		theme: 'classic',
+		cards: [],
 		time: 0,
 		timeInterval: null,
 		attempts: 0,
