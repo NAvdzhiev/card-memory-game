@@ -10,6 +10,7 @@ import { useGameStore } from '@/store/gameStore';
 
 const gameStore = useGameStore();
 
+// Format timer as a clock
 const formattedTime = computed(() => {
 	const totalSeconds = gameStore.getTime;
 	const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
