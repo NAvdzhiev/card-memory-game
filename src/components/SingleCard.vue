@@ -1,6 +1,6 @@
 <template>
 	<div class="card" @click="flipCard">
-		<div v-if="flipped" class="card__front">
+		<div v-if="flipped || isMatched" class="card__front">
 			<img :src="cardImage" :alt="cardAltTxt" />
 		</div>
 		<div v-else class="card__back"></div>
@@ -8,7 +8,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { useGameStore } from '@/store/gameStore';
 
 const props = defineProps({
 	cardImage: String,
@@ -16,13 +17,18 @@ const props = defineProps({
 	id: Number,
 });
 
-const emit = defineEmits(['flip']);
+const gameStore = useGameStore();
 
-const flipped = ref(false);
+const flipped = computed(() => gameStore.flippedCards.includes(props.id));
+const isMatched = computed(() =>
+	gameStore.matchedCards.some((matchedCard) => matchedCard.id === props.id),
+);
 
 const flipCard = () => {
-	flipped.value = !flipped.value;
-	emit('flip', { id: props.id, flipped: flipped.value });
+	if (flipped.value || isMatched.value || gameStore.blockInteraction) return;
+	gameStore.flipCard(props.id);
+
+	console.log(gameStore.matchedCards);
 };
 </script>
 

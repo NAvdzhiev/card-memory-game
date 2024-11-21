@@ -17,8 +17,6 @@ import { useGameStore } from '@/store/gameStore';
 
 const gameStore = useGameStore();
 const shuffledCards = computed(() => gameStore.getShuffledCards);
-const flippedCards = ref([]);
-const matchedCards = ref([]);
 </script>
 
 <style scoped>
