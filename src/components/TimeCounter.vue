@@ -1,24 +1,15 @@
 <template>
 	<div class="timer">
-		<p>Time: {{ formattedTime }}</p>
+		<p>Time: {{ formattedTime(gameStore.getTime) }}</p>
 	</div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { useGameStore } from '@/store/gameStore';
+import { useFormattedTime } from '@/composables/useFormattedTime';
 
 const gameStore = useGameStore();
+const { formattedTime } = useFormattedTime();
 
 // Format timer as a clock
-const formattedTime = computed(() => {
-	const totalSeconds = gameStore.getTime;
-	const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
-	const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
-		2,
-		'0',
-	);
-	const seconds = String(totalSeconds % 60).padStart(2, '0');
-	return `${hours}:${minutes}:${seconds}`;
-});
 </script>

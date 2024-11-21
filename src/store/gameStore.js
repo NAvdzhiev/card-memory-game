@@ -90,9 +90,47 @@ export const useGameStore = defineStore('game', {
 				}
 			}
 		},
+
+		checkGameComplete() {
+			if (this.matchedCards.length === this.shuffledCards.length) {
+				this.saveGameResults();
+				this.gameStatus = 'completed';
+				// Stop the timer without clearing the interval
+				if (this.timeInterval) {
+					clearInterval(this.timeInterval);
+					this.timeInterval = null; // Set the interval to null to avoid multiple intervals
+				}
+			}
+		},
+
+		saveGameResults() {
+			//Save current attempts and time to localStorage
+			const gameResults = {
+				attempts: this.attempts,
+				time: this.time,
+			};
+
+			const results = JSON.parse(localStorage.getItem('myResults')) || [];
+			results.push(gameResults);
+			localStorage.setItem('myResults', JSON.stringify(results));
+		},
 	},
 	getters: {
 		getTime: (state) => state.time,
 		getShuffledCards: (state) => state.shuffledCards,
+		getBestAttempts: () => {
+			const results = JSON.parse(localStorage.getItem('myResults')) || [];
+
+			// Sort top 3 results by attempts (ascending)
+			const sortedResults = results.sort((a, b) => a.attempts - b.attempts);
+			return sortedResults.slice(0, 3);
+		},
+		getBestTime: () => {
+			const results = JSON.parse(localStorage.getItem('myResults')) || [];
+
+			// Sort top 3 results by time (ascending)
+			const sortedResults = results.sort((a, b) => a.time - b.time);
+			return sortedResults.slice(0, 3);
+		},
 	},
 });

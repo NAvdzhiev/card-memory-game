@@ -12,11 +12,19 @@
 
 <script setup>
 import SingleCard from './SingleCard.vue';
-import { ref, computed } from 'vue';
+import { watch, computed } from 'vue';
 import { useGameStore } from '@/store/gameStore';
 
 const gameStore = useGameStore();
 const shuffledCards = computed(() => gameStore.getShuffledCards);
+
+// Watch if game is completed by checking matchedCards array length
+watch(
+	() => gameStore.matchedCards.length,
+	() => {
+		gameStore.checkGameComplete();
+	},
+);
 </script>
 
 <style scoped>
