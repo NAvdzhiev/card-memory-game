@@ -10,7 +10,7 @@
 			>
 				<option value="classic">Classic</option>
 				<option value="space">Space</option>
-				<option value="nature">Nature</option>
+				<option value="wildlife">Wildlife</option>
 				<option value="farm">Farm</option>
 			</select>
 		</div>

@@ -1,19 +1,10 @@
 import { defineStore } from 'pinia';
+import wildlifeTheme from '@/data/wildlife.json';
 
 export const useGameStore = defineStore('game', {
 	state: () => ({
 		grid: 4,
 		theme: 'classic',
-		cards: [
-			{ id: 1, image: 'image1.jpg', text: 'Image 1' },
-			{ id: 2, image: 'image2.jpg', text: 'Image 2' },
-			{ id: 3, image: 'image3.jpg', text: 'Image 3' },
-			{ id: 4, image: 'image4.jpg', text: 'Image 4' },
-			{ id: 5, image: 'image1.jpg', text: 'Image 1' },
-			{ id: 6, image: 'image2.jpg', text: 'Image 2' },
-			{ id: 7, image: 'image3.jpg', text: 'Image 3' },
-			{ id: 8, image: 'image4.jpg', text: 'Image 4' },
-		],
 		shuffledCards: [],
 		flippedCards: [],
 		matchedCards: [],
@@ -37,14 +28,31 @@ export const useGameStore = defineStore('game', {
 		},
 
 		generateCards() {
+			//Select cards based on theme
+			let themeCards = [];
+			if (this.theme === 'wildlife') {
+				themeCards = wildlifeTheme;
+			} else {
+				themeCards = [];
+			}
+
 			//Shuffle cards to randomize their order
-			this.cards.sort(() => Math.random() - 0.5);
+			themeCards.sort(() => Math.random() - 0.5);
+
+			//Determine number of pairs, based on grid size
+			const length = (this.grid * this.grid) / 2;
+			const selectedCards = themeCards.slice(0, length);
+
 			// Fill shuffeld cards into shuffledCards array
-			this.shuffledCards = this.cards.map((icon) => ({
-				id: icon.id,
-				icon: icon.image,
-				text: icon.text,
-			}));
+			this.shuffledCards = [...selectedCards, ...selectedCards].map(
+				(icon, index) => ({
+					id: index + 1,
+					icon: icon.image,
+					text: icon.text,
+				}),
+			);
+
+			this.shuffledCards.sort(() => Math.random() - 0.5);
 		},
 
 		// Set Grid Size Logic

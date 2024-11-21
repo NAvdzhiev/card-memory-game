@@ -1,5 +1,11 @@
 <template>
-	<div class="game-board">
+	<div
+		class="game-board"
+		:style="{
+			gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+			gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+		}"
+	>
 		<SingleCard
 			v-for="card in shuffledCards"
 			:id="card.id"
@@ -16,6 +22,9 @@ import { watch, computed } from 'vue';
 import { useGameStore } from '@/store/gameStore';
 
 const gameStore = useGameStore();
+
+const gridSize = computed(() => gameStore.grid);
+
 const shuffledCards = computed(() => gameStore.getShuffledCards);
 
 // Watch if game is completed by checking matchedCards array length
@@ -29,7 +38,10 @@ watch(
 
 <style scoped>
 .game-board {
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	gap: 20px;
+	width: 100%;
+	max-width: 100%;
+	margin: 0 auto;
 }
 </style>
