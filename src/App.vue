@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<AppButton title="Start Game" @click="gameStore.startGame" />
-		<DropdownFilters />
+		<DropdownFilters v-if="gameStore.gameStatus !== 'in progress'" />
 		<TimeCounter />
 		<AttemptCounter />
 	</header>

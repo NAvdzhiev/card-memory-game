@@ -17,6 +17,7 @@ export const useGameStore = defineStore('game', {
 
 	actions: {
 		startGame() {
+			this.gameStatus = 'in progress';
 			this.time = 0;
 			this.generateCards();
 			this.matchedCards = [];
