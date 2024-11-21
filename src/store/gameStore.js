@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useGameStore = defineStore('game', {
 	state: () => ({
-		difficulty: 'easy',
+		grid: 4,
 		theme: 'classic',
 		cards: [
 			{ id: 1, image: 'image1.jpg', text: 'Image 1' },
@@ -47,6 +47,17 @@ export const useGameStore = defineStore('game', {
 			}));
 		},
 
+		// Set Grid Size Logic
+		setGridSize(seletedSize) {
+			this.grid = seletedSize;
+		},
+
+		// Set Game Theme Logic
+		setTheme(selectedTheme) {
+			this.theme = selectedTheme;
+		},
+
+		// Flip Card Logic
 		flipCard(cardId) {
 			// Block interaction or ignore already flipped/matched cards
 			const isFlipped = this.flippedCards.includes(cardId);
@@ -91,6 +102,7 @@ export const useGameStore = defineStore('game', {
 			}
 		},
 
+		// Check if game is completed logic
 		checkGameComplete() {
 			if (this.matchedCards.length === this.shuffledCards.length) {
 				this.saveGameResults();

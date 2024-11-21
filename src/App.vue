@@ -1,11 +1,12 @@
 <template>
 	<header>
 		<AppButton title="Start Game" @click="gameStore.startGame" />
+		<DropdownFilters />
 		<TimeCounter />
 		<AttemptCounter />
-		<BestResults />
 	</header>
 	<GameBoard />
+	<BestResults />
 </template>
 
 <script setup>
@@ -15,6 +16,7 @@ import AttemptCounter from './components/AttemptCounter.vue';
 import BestResults from './components/BestResults.vue';
 import GameBoard from '@/components/GameBoard.vue';
 import { useGameStore } from '@/store/gameStore';
+import DropdownFilters from './components/DropdownFilters.vue';
 
 const gameStore = useGameStore();
 </script>
