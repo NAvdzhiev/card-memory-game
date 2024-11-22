@@ -34,12 +34,14 @@ watch(
 <style scoped>
 dialog {
 	border: none;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border-radius: 25px;
+	box-shadow: 15px 5px 15px 0px rgba(0, 0, 0, 0.3);
 	margin: auto;
 	padding: 0;
-	width: 65%;
+	width: 75%;
 	max-width: 100%;
-	background: #fcfcfc;
+	background: #1b2141;
+	padding: 50px;
 }
 
 .close-btn {

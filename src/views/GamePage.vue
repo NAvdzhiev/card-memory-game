@@ -17,14 +17,23 @@
 			</nav>
 		</header>
 		<section class="container__board">
-			<div v-if="gameStore.gameStatus === 'in progress'">
-				<button @click="gameStore.pauseGame">&#x23F8;</button>
-			</div>
-			<div v-else-if="gameStore.gameStatus === 'paused'">
-				<button @click="gameStore.resetGame">&#x23F5;</button>
-			</div>
 			<GameBoard />
 		</section>
+		<DialogWindow :open="isDialogOpen" @close="closeDialog">
+			<template v-if="dialogType === 'records'">
+				<BestResults />
+			</template>
+			<template v-else-if="dialogType === 'win'">
+				<div>
+					<h2>Good Job!</h2>
+					<p>
+						Your time: {{ gameStore.time }} <br />
+						You did {{ gameStore.attempts }} attempts.
+					</p>
+					<AppButton title="Play Again" @click="newGame" />
+				</div>
+			</template>
+		</DialogWindow>
 	</div>
 </template>
 
@@ -37,7 +46,7 @@ import GameBoard from '@/components/GameBoard.vue';
 import DialogWindow from '@/components/DialogWindow.vue';
 
 import { useGameStore } from '@/store/gameStore';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 
 const gameStore = useGameStore();
 
@@ -60,6 +69,25 @@ const newGame = () => {
 	gameStore.startGame();
 };
 
+const handleKeyPress = (event) => {
+	if (event.code === 'Space') {
+		event.preventDefault();
+		if (gameStore.gameStatus === 'in progress') {
+			gameStore.pauseGame();
+		} else {
+			gameStore.resetGame();
+		}
+	}
+};
+
+onMounted(() => {
+	window.addEventListener('keydown', handleKeyPress);
+});
+
+onUnmounted(() => {
+	window.removeEventListener('keydown', handleKeyPress);
+});
+
 watch(
 	() => gameStore.gameStatus,
 	(newStatus) => {
@@ -68,11 +96,6 @@ watch(
 		}
 	},
 );
-
-// const backgroundStyle = computed(() => ({
-// 	backgroundImage: `url(${require(`./assets/backgrounds/${gameStore.theme}.jpg`)})`,
-// 	transition: 'background-image 0.5s ease-in-out', // Transition for smooth change
-// }));
 </script>
 
 <style scoped>

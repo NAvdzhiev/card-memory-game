@@ -75,4 +75,16 @@ const updateGrid = () => {
 	font-size: 14px;
 	color: #666a83;
 }
+
+@media (max-width: 1200px) {
+	.filters {
+		width: 50%;
+	}
+}
+
+@media (max-width: 768px) {
+	.filters {
+		width: 75%;
+	}
+}
 </style>

@@ -3,7 +3,7 @@
 		<section class="intro__section">
 			<img class="intro__logo" :src="require('@/assets/logo.jpg')" alt="" />
 			<DropdownFilters />
-			<AppButton title="Start!" @click="handleClick" />
+			<AppButton class="intro__btn" title="Start!" @click="handleClick" />
 		</section>
 	</div>
 </template>
@@ -51,35 +51,27 @@ const handleClick = () => {
 	border-bottom: 1px solid #2a2f4d;
 }
 
-button {
-	font-family: 'Squada One', sans-serif;
-	font-weight: 900;
-	font-size: 20px;
-	text-transform: uppercase;
-	color: #fff;
-	padding: 10px 20px;
+.intro__btn {
 	width: 33.3%;
-	border: none;
-	border-radius: 50px;
-	background-color: #ea4186;
-	margin-top: 15px;
-	box-shadow: 12px 3px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
-button:hover {
-	animation: pulse 2s infinite;
-	cursor: pointer;
+@media (max-width: 1200px) {
+	.intro__section {
+		width: 50%;
+	}
+
+	.intro__btn {
+		width: 50%;
+	}
 }
 
-@keyframes pulse {
-	0% {
-		transform: scale(1);
+@media (max-width: 768px) {
+	.intro__section {
+		width: 80%;
 	}
-	50% {
-		transform: scale(1.1);
-	}
-	100% {
-		transform: scale(1);
+
+	.intro__btn {
+		width: 75%;
 	}
 }
 </style>

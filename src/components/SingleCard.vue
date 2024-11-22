@@ -3,7 +3,7 @@
 		<div v-if="flipped || isMatched" class="card__front">
 			<img :src="cardImage" :alt="cardAltTxt" />
 		</div>
-		<div v-else class="card__back"></div>
+		<div v-else :class="`card__back ${gameStore.theme}`"></div>
 	</div>
 </template>
 
@@ -44,8 +44,7 @@ const flipCard = () => {
 	transition: transform 0.5s;
 	border-radius: 25px;
 	overflow: hidden;
-	border: 1px solid;
-	box-shadow: 0 0 15px #b3b3b3;
+	box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.35);
 }
 
 .card__front,
@@ -58,11 +57,25 @@ const flipCard = () => {
 }
 
 .card__front {
-	background-color: #fff;
+	background-color: #fcfcfc;
 }
 
 .card__back {
-	background-color: red;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.card__back.farm {
+	background-image: url('../assets/backgrounds/card-farm.jpg');
+}
+
+.card__back.space {
+	background-image: url('../assets/backgrounds/card-space.jpg');
+}
+
+.card__back.wildlife {
+	background-image: url('../assets/backgrounds/card-wildlife.jpg');
 }
 
 img {
@@ -77,7 +90,7 @@ img {
 	}
 
 	img {
-		width: 60%;
+		width: 65%;
 	}
 }
 
