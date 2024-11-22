@@ -1,25 +1,10 @@
 <template>
 	<router-view />
+	<AppLoader />
 </template>
 
-<script setup></script>
+<script setup>
+import AppLoader from './components/AppLoader.vue';
+</script>
 
-<style scoped>
-.game-app {
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-	min-height: 100%;
-	height: 100vh;
-}
-
-nav {
-	width: 100%;
-}
-
-nav > .nav__menu {
-	list-style-type: none;
-	display: flex;
-	justify-content: space-between;
-}
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 <template>
 	<div class="timer">
-		<p>Time: {{ formattedTime(gameStore.getTime) }}</p>
+		<p>{{ formattedTime(gameStore.getTime) }}</p>
 	</div>
 </template>
 

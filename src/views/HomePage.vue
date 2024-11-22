@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-import DialogWindow from '@/components/DialogWindow.vue';
 import AppButton from '@/components/AppButton.vue';
 import DropdownFilters from '@/components/DropdownFilters.vue';
 import { useGameStore } from '@/store/gameStore';
@@ -30,7 +29,7 @@ const handleClick = () => {
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -43,10 +42,11 @@ const handleClick = () => {
 	width: 40%;
 	text-align: center;
 	box-shadow: 15px 5px 15px 0px rgba(0, 0, 0, 0.3);
+	padding-bottom: 60px;
 }
 
 .intro__logo {
-	width: 80%;
+	width: 70%;
 	margin: auto;
 	border-bottom: 1px solid #2a2f4d;
 }
