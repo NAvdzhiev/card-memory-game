@@ -1,7 +1,6 @@
 <template>
 	<button @click="handleClick">
-		<slot></slot>
-		{{ title }}
+		<span><slot></slot> {{ title }}</span>
 	</button>
 </template>
 

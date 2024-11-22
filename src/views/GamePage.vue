@@ -3,15 +3,29 @@
 		<header class="header">
 			<nav class="nav">
 				<ul class="nav__menu">
-					<li class="nav__menu-item">
-						<AppButton title="Restart Game" @click="newGame" />
-					</li>
-					<li class="nav__menu-item">
+					<li class="nav__menu-item counters">
 						<TimeCounter />
 						<AttemptCounter />
 					</li>
 					<li class="nav__menu-item">
-						<button @click="openDialog('records')">Records</button>
+						<AppButton
+							:style="{ marginTop: '0', boxShadow: 'none' }"
+							title="Restart"
+							@click="newGame"
+							><img
+								class="menu-item__records"
+								src="../assets/undo.svg"
+								alt="Undo Icon"
+								width="20"
+							/>
+						</AppButton>
+						<img
+							@click="openDialog('records')"
+							src="../assets/rewards.svg"
+							alt="Records Icon"
+							width="50"
+							:style="{ cursor: 'pointer' }"
+						/>
 					</li>
 				</ul>
 			</nav>
@@ -130,7 +144,42 @@ header {
 .nav > .nav__menu {
 	list-style-type: none;
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	width: 100%;
+}
+
+.nav__menu > .nav__menu-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 30px;
+}
+
+.nav__menu-item.counters {
+	background: #1b2141;
+	padding: 20px 30px;
+	font-family: 'Squada One', sans-serif;
+	color: #fff;
+	border-radius: 50px;
+}
+
+img.menu-item__records {
+	display: inline-block;
+}
+
+@media (max-width: 1200px) {
+	.game__page {
+		justify-content: space-evenly;
+	}
+
+	.nav > .nav__menu {
+		flex-direction: column-reverse;
+		justify-content: space-around;
+	}
+
+	.nav > .nav__menu > .nav__menu-item {
+		margin: 20px 0;
+	}
 }
 </style>
