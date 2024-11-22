@@ -8,10 +8,9 @@
 				v-model="selectedTheme"
 				@change="updateTheme"
 			>
-				<option value="classic">Classic</option>
+				<option value="farm">Farm</option>
 				<option value="space">Space</option>
 				<option value="wildlife">Wildlife</option>
-				<option value="farm">Farm</option>
 			</select>
 		</div>
 		<div class="filters__dropdown">

@@ -4,7 +4,7 @@ import wildlifeTheme from '@/data/wildlife.json';
 export const useGameStore = defineStore('game', {
 	state: () => ({
 		grid: 4,
-		theme: 'classic',
+		theme: 'farm',
 		shuffledCards: [],
 		flippedCards: [],
 		matchedCards: [],
@@ -12,7 +12,7 @@ export const useGameStore = defineStore('game', {
 		time: 0,
 		timeInterval: null,
 		attempts: 0,
-		gameStatus: null,
+		gameStatus: 'start',
 	}),
 
 	actions: {
@@ -33,8 +33,10 @@ export const useGameStore = defineStore('game', {
 			let themeCards = [];
 			if (this.theme === 'wildlife') {
 				themeCards = wildlifeTheme;
+			} else if (this.theme === 'space') {
+				themeCards = 'spaceTheme';
 			} else {
-				themeCards = [];
+				themeCards = 'farmTheme';
 			}
 
 			//Shuffle cards to randomize their order
