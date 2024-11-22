@@ -1,9 +1,9 @@
 <template>
-	<header class="header" v-if="gameStore.gameStatus === 'in progress'">
+	<header class="header" v-if="gameStore.gameStatus !== 'start'">
 		<nav class="nav">
 			<ul class="nav__menu">
 				<li class="nav__menu-item">
-					<AppButton title="Reset Game" @click="newGame" />
+					<AppButton title="Restart Game" @click="newGame" />
 				</li>
 				<li class="nav__menu-item">
 					<TimeCounter />
@@ -16,7 +16,7 @@
 		</nav>
 	</header>
 	<main class="container">
-		<section class="container__start">
+		<section v-if="gameStore.gameStatus === 'start'" class="container__start">
 			<AppButton
 				v-if="gameStore.gameStatus === 'start'"
 				title="Start Game"
@@ -24,7 +24,15 @@
 			/>
 			<DropdownFilters v-if="gameStore.gameStatus === 'start'" />
 		</section>
-		<GameBoard v-if="gameStore.gameStatus !== 'start'" />
+		<section v-else class="container__board">
+			<div v-if="gameStore.gameStatus === 'in progress'">
+				<button @click="gameStore.pauseGame">&#x23F8;</button>
+			</div>
+			<div v-else-if="gameStore.gameStatus === 'paused'">
+				<button @click="gameStore.resetGame">&#x23F5;</button>
+			</div>
+			<GameBoard v-if="gameStore.gameStatus !== 'start'" />
+		</section>
 	</main>
 
 	<DialogWindow :open="isDialogOpen" @close="closeDialog">

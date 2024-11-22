@@ -34,15 +34,15 @@ const flipCard = () => {
 
 <style scoped>
 .card {
-	width: 150px;
-	height: 200px;
+	width: 100%;
+	height: 100%;
 	border-radius: 8px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
 	transition: transform 0.5s;
-	border-radius: 15px;
+	border-radius: 25px;
 	overflow: hidden;
 	border: 1px solid;
 	box-shadow: 0 0 15px #b3b3b3;
@@ -66,6 +66,24 @@ const flipCard = () => {
 }
 
 img {
-	width: 50px;
+	width: 50%;
+}
+
+/* Responsive styles */
+
+@media (max-width: 768px) {
+	.card {
+		border-radius: 15px;
+	}
+
+	img {
+		width: 60%;
+	}
+}
+
+@media (max-width: 480px) {
+	.card {
+		border-radius: 8px;
+	}
 }
 </style>

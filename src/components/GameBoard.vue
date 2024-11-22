@@ -2,8 +2,9 @@
 	<div
 		class="game-board"
 		:style="{
-			gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-			gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+			'--grid-size': gridSize,
+			'--cell-size': calculateCellSize() + 'px',
+			'--gap-size': calculateGapSize() + 'px',
 		}"
 	>
 		<SingleCard
@@ -23,25 +24,35 @@ import { useGameStore } from '@/store/gameStore';
 
 const gameStore = useGameStore();
 
-const gridSize = computed(() => gameStore.grid);
-
 const shuffledCards = computed(() => gameStore.getShuffledCards);
 
-// Watch if game is completed by checking matchedCards array length
+// Watch if game is completed by checking matchedCards' array length
 watch(
 	() => gameStore.matchedCards.length,
 	() => {
 		gameStore.checkGameComplete();
 	},
 );
+
+const gridSize = computed(() => gameStore.grid);
+
+const calculateCellSize = () => {
+	const screenSize = Math.min(window.innerWidth, window.innerHeight);
+	return Math.floor(screenSize / (gridSize.value + 1));
+};
+
+const calculateGapSize = () => Math.floor(calculateCellSize() * 0.075);
 </script>
 
 <style scoped>
 .game-board {
 	display: grid;
-	gap: 20px;
-	width: 100%;
+	grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+	grid-template-rows: repeat(var(--grid-size), var(--cell-size));
+	gap: var(--gap-size);
+	justify-content: center;
+	align-items: center;
+	margin: auto;
 	max-width: 100%;
-	margin: 0 auto;
 }
 </style>

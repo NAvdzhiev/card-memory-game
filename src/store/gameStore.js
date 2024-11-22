@@ -37,7 +37,9 @@ export const useGameStore = defineStore('game', {
 			}
 
 			this.timeInterval = setInterval(() => {
-				this.time++;
+				if (this.gameStatus === 'in progress') {
+					this.time++;
+				}
 			}, 1000);
 		},
 
@@ -79,6 +81,15 @@ export const useGameStore = defineStore('game', {
 		// Set Game Theme Logic
 		setTheme(selectedTheme) {
 			this.theme = selectedTheme;
+		},
+
+		pauseGame() {
+			this.gameStatus = 'paused';
+			this.blockInteraction = true;
+		},
+		resetGame() {
+			this.gameStatus = 'in progress';
+			this.blockInteraction = false;
 		},
 
 		// Flip Card Logic
