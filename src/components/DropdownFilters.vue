@@ -43,3 +43,36 @@ const updateGrid = () => {
 	gameStore.setGridSize(parseInt(selectedGrid.value));
 };
 </script>
+
+<style scoped>
+.filters {
+	width: 33.3%;
+	margin: 30px auto;
+}
+
+.filters__dropdown {
+	margin: 15px 0;
+}
+
+.filters__dropdown label {
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 14px;
+	color: #b7b8be;
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.filters__dropdown select {
+	width: 100%;
+	padding: 10px;
+	background-color: #22284a;
+	border: none;
+	border-radius: 3px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 14px;
+	color: #666a83;
+}
+</style>
