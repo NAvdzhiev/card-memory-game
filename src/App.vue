@@ -17,7 +17,11 @@
 	</header>
 	<main class="container">
 		<section class="container__start">
-			<AppButton title="Start Game" @click="gameStore.startGame" />
+			<AppButton
+				v-if="gameStore.gameStatus === 'start'"
+				title="Start Game"
+				@click="gameStore.startGame"
+			/>
 			<DropdownFilters v-if="gameStore.gameStatus === 'start'" />
 		</section>
 		<GameBoard v-if="gameStore.gameStatus !== 'start'" />

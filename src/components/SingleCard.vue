@@ -64,4 +64,8 @@ const flipCard = () => {
 .card__back {
 	background-color: red;
 }
+
+img {
+	width: 50px;
+}
 </style>

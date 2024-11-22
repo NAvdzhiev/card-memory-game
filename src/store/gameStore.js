@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import wildlifeTheme from '@/data/wildlife.json';
+import farmTheme from '@/data/farm.json';
+import spaceTheme from '@/data/space.json';
 
 export const useGameStore = defineStore('game', {
 	state: () => ({
@@ -34,9 +36,9 @@ export const useGameStore = defineStore('game', {
 			if (this.theme === 'wildlife') {
 				themeCards = wildlifeTheme;
 			} else if (this.theme === 'space') {
-				themeCards = 'spaceTheme';
+				themeCards = spaceTheme;
 			} else {
-				themeCards = 'farmTheme';
+				themeCards = farmTheme;
 			}
 
 			//Shuffle cards to randomize their order

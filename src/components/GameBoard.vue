@@ -9,7 +9,7 @@
 		<SingleCard
 			v-for="card in shuffledCards"
 			:id="card.id"
-			:cardImage="card.image"
+			:cardImage="require(`@/assets/${gameStore.theme}/${card.icon}`)"
 			:cardAltTxt="card.text"
 			:key="card.id"
 		/>
