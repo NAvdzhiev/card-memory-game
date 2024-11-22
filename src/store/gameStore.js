@@ -2,6 +2,10 @@ import { defineStore } from 'pinia';
 import wildlifeTheme from '@/data/wildlife.json';
 import farmTheme from '@/data/farm.json';
 import spaceTheme from '@/data/space.json';
+import { playSound } from '@/utils/sounds';
+import flipSound from '@/assets/sounds/flip.mp3';
+import winSound from '@/assets/sounds/win.mp3';
+import matchSound from '@/assets/sounds/match.mp3';
 
 export const useGameStore = defineStore('game', {
 	state: () => ({
@@ -83,6 +87,7 @@ export const useGameStore = defineStore('game', {
 			if (card.disabled) return; // Don't flip if the card is disabled
 
 			// Flip the card to show its front
+			playSound(flipSound);
 			card.flipped = true;
 			this.flippedCards.push(cardId);
 
@@ -102,6 +107,7 @@ export const useGameStore = defineStore('game', {
 
 				if (card1.text === card2.text) {
 					// Match found
+					playSound(matchSound);
 					this.matchedCards.push(card1, card2);
 					this.flippedCards = [];
 					this.blockInteraction = false;
@@ -110,6 +116,7 @@ export const useGameStore = defineStore('game', {
 					setTimeout(() => {
 						this.flippedCards = [];
 						this.blockInteraction = false;
+						playSound(flipSound);
 					}, 2000);
 				}
 			}
@@ -118,6 +125,7 @@ export const useGameStore = defineStore('game', {
 		// Check if game is completed logic
 		checkGameComplete() {
 			if (this.matchedCards.length === this.shuffledCards.length) {
+				playSound(winSound);
 				this.saveGameResults();
 				this.gameStatus = 'completed';
 				// Stop the timer without clearing the interval

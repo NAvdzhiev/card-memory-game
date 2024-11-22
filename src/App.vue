@@ -10,7 +10,7 @@
 					<AttemptCounter />
 				</li>
 				<li class="nav__menu-item">
-					<button @click="openDialog">Records</button>
+					<button @click="openDialog('records')">Records</button>
 				</li>
 			</ul>
 		</nav>
@@ -28,7 +28,17 @@
 	</main>
 
 	<DialogWindow :open="isDialogOpen" @close="closeDialog">
-		<BestResults />
+		<template v-if="dialogType === 'records'">
+			<BestResults />
+		</template>
+		<template v-else-if="dialogType === 'win'">
+			<h2>Good Job!</h2>
+			<p>
+				You completed the game in {{ gameStore.time }} seconds with
+				{{ gameStore.attempts }} attempts.
+			</p>
+			<AppButton title="Play Again" @click="newGame" />
+		</template>
 	</DialogWindow>
 </template>
 
@@ -42,19 +52,37 @@ import DialogWindow from './components/DialogWindow.vue';
 import DropdownFilters from './components/DropdownFilters.vue';
 
 import { useGameStore } from '@/store/gameStore';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const gameStore = useGameStore();
 
 const isDialogOpen = ref(false);
+const dialogType = ref('');
 
-const openDialog = () => {
+const openDialog = (type) => {
+	dialogType.value = type;
 	isDialogOpen.value = true;
+	console.log(type);
 };
 
 const closeDialog = () => {
 	isDialogOpen.value = false;
+	dialogType.value = '';
 };
+
+const newGame = () => {
+	closeDialog();
+	gameStore.startGame();
+};
+
+watch(
+	() => gameStore.gameStatus,
+	(newStatus) => {
+		if (newStatus === 'completed') {
+			openDialog('win');
+		}
+	},
+);
 </script>
 
 <style scoped>
@@ -66,8 +94,5 @@ nav > .nav__menu {
 	list-style-type: none;
 	display: flex;
 	justify-content: space-between;
-}
-
-nav > ul.nav__list > li {
 }
 </style>
