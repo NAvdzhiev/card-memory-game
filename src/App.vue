@@ -3,7 +3,7 @@
 		<nav class="nav">
 			<ul class="nav__menu">
 				<li class="nav__menu-item">
-					<AppButton title="Reset Game" @click="gameStore.startGame" />
+					<AppButton title="Reset Game" @click="newGame" />
 				</li>
 				<li class="nav__menu-item">
 					<TimeCounter />

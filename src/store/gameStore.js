@@ -29,6 +29,13 @@ export const useGameStore = defineStore('game', {
 			this.matchedCards = [];
 			this.flippedCards = [];
 			this.attempts = 0;
+
+			// Clear existing interval - for restart
+			if (this.timeInterval) {
+				clearInterval(this.timeInterval);
+				this.timeInterval = null;
+			}
+
 			this.timeInterval = setInterval(() => {
 				this.time++;
 			}, 1000);
