@@ -24,7 +24,7 @@ npm run build
 ```
 ### Functionalities:
 ```
-1. Choose Themse (Farm, Space, Wildlife) and Grid sizes (4x4, 6x6, 8x8)
+1. Choose Themes (Farm, Space, Wildlife) and Grid sizes (4x4, 6x6, 8x8)
 2. Different Card back style, icons and background images based on the theme.
 3. Animation for card flip
 4. Check best results (click on cup icon) - opens Dialog Window with top 3 best times/attempts 
