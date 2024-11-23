@@ -23,6 +23,8 @@ export const useGameStore = defineStore('game', {
 	}),
 
 	actions: {
+		// Start Game Action
+
 		startGame() {
 			this.gameStatus = 'in progress';
 			this.time = 0;
@@ -44,6 +46,7 @@ export const useGameStore = defineStore('game', {
 			}, 1000);
 		},
 
+		// Generate Cards Action
 		generateCards() {
 			//Select cards based on theme
 			let themeCards = [];
@@ -84,10 +87,13 @@ export const useGameStore = defineStore('game', {
 			this.theme = selectedTheme;
 		},
 
+		// Pause Game Action
 		pauseGame() {
 			this.gameStatus = 'paused';
 			this.blockInteraction = true;
 		},
+
+		// Reset Game Action
 		resetGame() {
 			this.gameStatus = 'in progress';
 			this.blockInteraction = false;
@@ -155,6 +161,7 @@ export const useGameStore = defineStore('game', {
 			}
 		},
 
+		// Save Results Logic
 		saveGameResults() {
 			//Save current attempts and time to localStorage
 			const gameResults = {
