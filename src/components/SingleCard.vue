@@ -1,9 +1,13 @@
 <template>
-	<div class="card" @click="flipCard">
-		<div v-if="flipped || isMatched" class="card__front">
+	<div
+		class="card"
+		:class="{ flipped: flipped || isMatched }"
+		@click="flipCard"
+	>
+		<div class="card__front">
 			<img :src="cardImage" :alt="cardAltTxt" />
 		</div>
-		<div v-else :class="`card__back ${gameStore.theme}`"></div>
+		<div :class="`card__back ${gameStore.theme}`"></div>
 	</div>
 </template>
 
@@ -36,7 +40,6 @@ const flipCard = () => {
 .card {
 	width: 100%;
 	height: 100%;
-	border-radius: 8px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -44,7 +47,9 @@ const flipCard = () => {
 	transition: transform 0.5s;
 	border-radius: 25px;
 	overflow: hidden;
-	box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.35);
+	position: relative;
+	perspective: 1000px;
+	box-shadow: 0px 2px 14px 0px rgba(0, 0, 0, 0.35);
 }
 
 .card__front,
@@ -54,16 +59,32 @@ const flipCard = () => {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	backface-visibility: hidden;
+	transform-style: preserve-3d;
+	transition: transform 0.2s ease;
 }
 
 .card__front {
 	background-color: #fcfcfc;
+	transform: rotateY(180deg);
 }
 
 .card__back {
+	transform: rotateY(0deg);
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+.card.flipped .card__front {
+	transform: rotateY(0deg);
+}
+
+.card.flipped .card__back {
+	transform: rotateY(-180deg);
 }
 
 .card__back.farm {

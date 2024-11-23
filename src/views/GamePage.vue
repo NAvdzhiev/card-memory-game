@@ -1,5 +1,12 @@
 <template>
-	<div :class="`game__page ${gameStore.theme}`">
+	<div
+		:class="`game__page ${gameStore.theme}`"
+		:style="
+			gameStore.gameStatus === 'paused'
+				? { filter: 'grayscale(80%)' }
+				: { filter: 'none' }
+		"
+	>
 		<header class="header">
 			<nav class="nav">
 				<ul class="nav__menu">
@@ -7,8 +14,12 @@
 						<TimeCounter />
 						<AttemptCounter />
 					</li>
-					<li class="nav__menu-item">
+					<li class="nav__menu-item text">
+						<h2>Press Space to Pause/Play Game</h2>
+					</li>
+					<li class="nav__menu-item actions">
 						<AppButton
+							:disabled="gameStore.gameStatus !== 'in progress'"
 							:style="{ marginTop: '0', boxShadow: 'none' }"
 							title="Restart"
 							@click="newGame"
@@ -17,6 +28,7 @@
 								src="../assets/undo.svg"
 								alt="Undo Icon"
 								width="20"
+								:style="{ marginBottom: '-3px' }"
 							/>
 						</AppButton>
 						<img
@@ -24,7 +36,7 @@
 							src="../assets/rewards.svg"
 							alt="Records Icon"
 							width="50"
-							:style="{ cursor: 'pointer' }"
+							class="menu-item__records"
 						/>
 					</li>
 				</ul>
@@ -33,16 +45,25 @@
 		<section class="container__board">
 			<GameBoard />
 		</section>
+		<button class="game__back-button" @click="handleBackButton">
+			<img src="../assets/arrow.svg" alt="Back Arrow" />
+		</button>
 		<DialogWindow :open="isDialogOpen" @close="closeDialog">
 			<template v-if="dialogType === 'records'">
 				<BestResults />
 			</template>
 			<template v-else-if="dialogType === 'win'">
-				<div>
-					<h2>Good Job!</h2>
+				<div class="game__win-dialog">
+					<h1>Good Job!</h1>
 					<p>
-						Your time: {{ gameStore.time }} <br />
-						You did {{ gameStore.attempts }} attempts.
+						Your time:
+						<span :style="{ color: '#58ce94' }">{{
+							formattedTime(gameStore.time)
+						}}</span>
+						<br />
+						You did
+						<span :style="{ color: '#58ce94' }">{{ gameStore.attempts }}</span>
+						attempts.
 					</p>
 					<AppButton title="Play Again" @click="newGame" />
 				</div>
@@ -60,9 +81,13 @@ import GameBoard from '@/components/GameBoard.vue';
 import DialogWindow from '@/components/DialogWindow.vue';
 
 import { useGameStore } from '@/store/gameStore';
+import { useRouter } from 'vue-router';
+import { useFormattedTime } from '@/composables/useFormattedTime';
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 
 const gameStore = useGameStore();
+const router = useRouter();
+const { formattedTime } = useFormattedTime();
 
 const isDialogOpen = ref(false);
 const dialogType = ref('');
@@ -81,6 +106,11 @@ const closeDialog = () => {
 const newGame = () => {
 	closeDialog();
 	gameStore.startGame();
+};
+
+const handleBackButton = () => {
+	router.replace('/');
+	gameStore.gameStatus === 'start';
 };
 
 const handleKeyPress = (event) => {
@@ -157,15 +187,86 @@ header {
 }
 
 .nav__menu-item.counters {
+	order: 0;
 	background: #1b2141;
 	padding: 20px 30px;
 	font-family: 'Squada One', sans-serif;
 	color: #fff;
 	border-radius: 50px;
+	box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.35);
+}
+
+.nav__menu-item.actions {
+	order: 2;
 }
 
 img.menu-item__records {
 	display: inline-block;
+	cursor: pointer;
+}
+
+.nav__menu-item.text {
+	order: 1;
+}
+
+.nav__menu-item.text > h2 {
+	font-family: 'Squada One', sans-serif;
+	text-transform: uppercase;
+	color: #fbf2f2;
+	text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.35);
+	text-align: center;
+}
+
+.game__back-button {
+	width: 80px;
+	height: 80px;
+	background: #fcfcfc;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	border: none;
+	border-radius: 50px;
+	box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.35);
+	display: flex;
+	justify-content: space-around;
+}
+
+.game__back-button > img {
+	width: 30px;
+}
+
+.game__back-button:hover {
+	animation: pulse 2s infinite;
+	cursor: pointer;
+}
+
+.game__win-dialog {
+	text-align: center;
+}
+
+.game__win-dialog h1 {
+	padding: 18px;
+}
+
+.game__win-dialog p {
+	font-size: 18px;
+	padding: 20px 0;
+}
+
+.game__win-dialog > button {
+	width: 33.3%;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 
 @media (max-width: 1200px) {
@@ -180,6 +281,37 @@ img.menu-item__records {
 
 	.nav > .nav__menu > .nav__menu-item {
 		margin: 20px 0;
+	}
+
+	.nav__menu-item.actions {
+		order: 2;
+	}
+
+	.nav__menu-item.counters {
+		order: 1;
+	}
+
+	.nav__menu-item.text {
+		order: 0;
+	}
+
+	.game__win-dialog > button {
+		width: 50%;
+	}
+}
+
+@media (max-width: 600px) {
+	.game__back-button {
+		width: 55px;
+		height: 55px;
+	}
+
+	.game__back-button > img {
+		width: 25px;
+	}
+
+	.game__win-dialog > button {
+		width: 80%;
 	}
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
 	<dialog v-show="open" @click.self="close">
+		<button class="close-btn" @click="close">
+			<img src="../assets/close.svg" alt="Close Button" />
+		</button>
 		<slot></slot>
 	</dialog>
 </template>
@@ -34,27 +37,42 @@ watch(
 <style scoped>
 dialog {
 	border: none;
-	border-radius: 25px;
+	border-top: 5px solid #58ce94;
+	border-radius: 0;
 	box-shadow: 15px 5px 15px 0px rgba(0, 0, 0, 0.3);
 	margin: auto;
-	padding: 0;
-	width: 75%;
+	padding: 10px;
+	width: 33.3%;
 	max-width: 100%;
 	background: #1b2141;
-	padding: 50px;
+	padding: 30px;
+	color: #fff;
+	font-family: 'Squada One', sans-serif;
 }
 
-.close-btn {
+dialog .close-btn {
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	background: transparent;
+	width: 15px;
 	border: none;
-	font-size: 24px;
+	background: transparent;
 	cursor: pointer;
 }
 
 dialog::backdrop {
 	background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1200px) {
+	dialog {
+		width: 50%;
+	}
+}
+
+@media (max-width: 768px) {
+	dialog {
+		width: 75%;
+	}
 }
 </style>
