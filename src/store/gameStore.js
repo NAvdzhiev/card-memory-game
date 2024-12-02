@@ -109,7 +109,6 @@ export const useGameStore = defineStore('game', {
 
 			// Add flipped card to flippedCards array
 			const card = this.shuffledCards.find((c) => c.id === cardId);
-			if (card.disabled) return; // Don't flip if the card is disabled
 
 			// Flip the card to show its front
 			playSound(flipSound);
