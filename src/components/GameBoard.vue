@@ -24,7 +24,7 @@ import { useGameStore } from '@/store/gameStore';
 
 const gameStore = useGameStore();
 
-const shuffledCards = computed(() => gameStore.getShuffledCards);
+const shuffledCards = gameStore.getShuffledCards;
 
 // Watch if game is completed by checking matchedCards' array length
 watch(

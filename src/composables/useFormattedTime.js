@@ -1,5 +1,3 @@
-import { computed } from 'vue';
-
 export const useFormattedTime = () => {
 	const formattedTime = (totalSeconds) => {
 		const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
