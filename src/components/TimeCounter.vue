@@ -10,7 +10,6 @@ import { useGameStore } from '@/store/gameStore';
 import { useFormattedTime } from '@/composables/useFormattedTime';
 
 const gameStore = useGameStore();
-
 const { formattedTime } = useFormattedTime();
 </script>
 
