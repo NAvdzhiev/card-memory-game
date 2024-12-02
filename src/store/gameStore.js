@@ -109,7 +109,6 @@ export const useGameStore = defineStore('game', {
 
 			// Add flipped card to flippedCards array
 			const card = this.shuffledCards.find((c) => c.id === cardId);
-			if (card.disabled) return; // Don't flip if the card is disabled
 
 			// Flip the card to show its front
 			playSound(flipSound);
@@ -153,7 +152,7 @@ export const useGameStore = defineStore('game', {
 				playSound(winSound);
 				this.saveGameResults();
 				this.gameStatus = 'completed';
-				// Stop the timer without clearing the interval
+				// Stop the timer
 				if (this.timeInterval) {
 					clearInterval(this.timeInterval);
 					this.timeInterval = null; // Set the interval to null to avoid multiple intervals
